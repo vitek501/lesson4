@@ -3,7 +3,6 @@ from .base_page import BasePage
 from selenium.common.exceptions import NoAlertPresentException
 from .locators import ProductPageLocators
 
-
 class ProductPage(BasePage):
     def test_purchase_book(self):
         link = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
@@ -28,3 +27,10 @@ class ProductPage(BasePage):
         alert_product = self.browser.find_element(*ProductPageLocators.ALLERT_PRODUCT).text.lower()
         assert product == alert_product, 'Added the wrong product'
 
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+           "Success message is presented, but should not be"
+
+    def message_should_be_gone(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+                "Success message is not missing"
